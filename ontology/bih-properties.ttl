@@ -1,0 +1,276 @@
+@prefix bih: <https://w3id.org/bih/ontology#> .
+@prefix cito: <http://purl.org/spar/cito/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+
+<https://w3id.org/bih/ontology>
+  a owl:Ontology ;
+  rdfs:label "Bibliographic Information Hub Ontology"@en ;
+  rdfs:comment "Provisional OWL/Turtle vocabulary for BIH classes and properties. BIH prefers direct reuse of existing properties such as schema:identifier, schema:encoding, cito:cites, cito:isCitedBy, owl:sameAs, foaf:page, and dcterms:identifier whenever their semantics are already sufficient."@en ;
+  owl:versionInfo "0.6.0" .
+
+# ============================================================
+# Classes
+# ============================================================
+
+bih:HubEntry
+  a owl:Class ;
+  rdfs:label "Hub Entry"@en ;
+  rdfs:comment "A bibliographic hub entry that aggregates statements about one scholarly resource and its relations."@en .
+
+# bih:Resource rdfs:subClassOf schema:CreativeWork (subClassOf schema:Thing).
+# This satisfies the domain of schema:encoding (schema:CreativeWork) and
+# the domain of schema:identifier (schema:Thing) when those properties
+# are used on the described resource.
+bih:Resource
+  a owl:Class ;
+  rdfs:label "Resource"@en ;
+  rdfs:comment "A scholarly or bibliographic resource described by a hub entry. Unless a more specific granularity is declared, BIH treats the resource at the granularity implied by the hub entry's primary identifier."@en ;
+  rdfs:subClassOf schema:CreativeWork .
+
+# bih:Identifier rdfs:subClassOf schema:PropertyValue.
+# schema:identifier has range schema:PropertyValue | Text | URL,
+# so bih:Identifier nodes satisfy the range when used as identifier values.
+# Note: in the BIH SPARQL/JSON representation, identifier properties are
+# declared as owl:DatatypeProperty with rdfs:range xsd:string (direct literals),
+# so these classes serve as conceptual groupings rather than property ranges.
+bih:Identifier
+  a owl:Class ;
+  rdfs:label "Identifier"@en ;
+  rdfs:comment "Conceptual grouping for BIH identifier types, corresponding to schema:PropertyValue in the schema.org pattern. In BIH's RDF/SPARQL representation, identifier values are carried directly as xsd:string literals via bih:has* DatatypeProperties."@en ;
+  rdfs:subClassOf schema:PropertyValue .
+
+bih:DOIIdentifier
+  a owl:Class ;
+  rdfs:label "DOI identifier"@en ;
+  rdfs:comment "An identifier node whose semantics correspond to a DOI."@en ;
+  rdfs:subClassOf bih:Identifier .
+
+bih:ISBNIdentifier
+  a owl:Class ;
+  rdfs:label "ISBN identifier"@en ;
+  rdfs:comment "An identifier node whose semantics correspond to an ISBN."@en ;
+  rdfs:subClassOf bih:Identifier .
+
+bih:CRIDIdentifier
+  a owl:Class ;
+  rdfs:label "CRID identifier"@en ;
+  rdfs:comment "An identifier node whose semantics correspond to a CRID."@en ;
+  rdfs:subClassOf bih:Identifier .
+
+bih:OpenAlexIdentifier
+  a owl:Class ;
+  rdfs:label "OpenAlex identifier"@en ;
+  rdfs:comment "An identifier node whose semantics correspond to an OpenAlex identifier."@en ;
+  rdfs:subClassOf bih:Identifier .
+
+bih:BIHIdentifier
+  a owl:Class ;
+  rdfs:label "BIH identifier"@en ;
+  rdfs:comment "An identifier node whose semantics correspond to a BIH-local identifier."@en ;
+  rdfs:subClassOf bih:Identifier .
+
+bih:ExternalUriIdentifier
+  a owl:Class ;
+  rdfs:label "external URI identifier"@en ;
+  rdfs:comment "An identifier node whose value is a trusted external URI used as an identifier when no more specific identifier scheme is available."@en ;
+  rdfs:subClassOf bih:Identifier .
+
+bih:OCLCIdentifier
+  a owl:Class ;
+  rdfs:label "OCLC identifier"@en ;
+  rdfs:comment "An identifier node whose semantics correspond to an OCLC control number."@en ;
+  rdfs:subClassOf bih:Identifier .
+
+bih:NDLBibIDIdentifier
+  a owl:Class ;
+  rdfs:label "NDL bib ID identifier"@en ;
+  rdfs:comment "An identifier node whose semantics correspond to a National Diet Library bibliographic identifier."@en ;
+  rdfs:subClassOf bih:Identifier .
+
+# bih:DownloadableData rdfs:subClassOf schema:MediaObject.
+# schema:encoding has range schema:MediaObject,
+# so bih:DownloadableData nodes satisfy the range when used as encoding values.
+bih:DownloadableData
+  a owl:Class ;
+  rdfs:label "Downloadable data"@en ;
+  rdfs:comment "A downloadable machine-readable representation of a resource, such as BibTeX, CSL-JSON, or an archived copy."@en ;
+  rdfs:subClassOf schema:MediaObject .
+
+bih:BibliographicDownload
+  a owl:Class ;
+  rdfs:label "bibliographic download"@en ;
+  rdfs:comment "A downloadable bibliographic serialization of a resource."@en ;
+  rdfs:subClassOf bih:DownloadableData .
+
+bih:CSLJSONDownload
+  a owl:Class ;
+  rdfs:label "CSL-JSON download"@en ;
+  rdfs:comment "A downloadable CSL-JSON serialization of a resource."@en ;
+  rdfs:subClassOf bih:BibliographicDownload .
+
+bih:BibTeXDownload
+  a owl:Class ;
+  rdfs:label "BibTeX download"@en ;
+  rdfs:comment "A downloadable BibTeX serialization of a resource."@en ;
+  rdfs:subClassOf bih:BibliographicDownload .
+
+bih:ArchivedCopy
+  a owl:Class ;
+  rdfs:label "archived copy"@en ;
+  rdfs:comment "A downloadable archived or preservation-oriented representation of a resource."@en ;
+  rdfs:subClassOf bih:DownloadableData .
+
+bih:CitationData
+  a owl:Class ;
+  rdfs:label "citation data"@en ;
+  rdfs:comment "A downloadable data object that publishes citation relations about a resource."@en ;
+  rdfs:subClassOf bih:DownloadableData .
+
+bih:AnnotationData
+  a owl:Class ;
+  rdfs:label "annotation data"@en ;
+  rdfs:comment "A downloadable data object that carries annotations about a resource."@en ;
+  rdfs:subClassOf bih:DownloadableData .
+
+# ============================================================
+# BIH Properties
+# ============================================================
+
+# --- Hub entry structure ---
+
+bih:describesResource
+  a owl:ObjectProperty ;
+  rdfs:label "describes resource"@en ;
+  rdfs:comment "Relates a hub entry to the resource it describes. Unless another modeling decision is stated, the described resource follows the granularity implied by the hub entry's primary identifier."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range bih:Resource ;
+  rdfs:subPropertyOf dcterms:relation .
+
+bih:primaryIdentifier
+  a owl:ObjectProperty ;
+  rdfs:label "primary identifier"@en ;
+  rdfs:comment "Relates a hub entry to the identifier node that should be treated as primary for display and default granularity decisions."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range bih:Identifier ;
+  rdfs:subPropertyOf dcterms:relation .
+
+# --- Identifier properties (subPropertyOf dcterms:identifier) ---
+# dcterms:identifier has no formal domain/range in DCMI Terms.
+# In BIH, these properties are attached to bih:HubEntry nodes and
+# point to bih:Identifier nodes (subClassOf schema:PropertyValue).
+
+bih:hasBihId
+  a owl:DatatypeProperty ;
+  rdfs:label "has BIH identifier"@en ;
+  rdfs:comment "Relates a hub entry to its BIH-local identifier as an xsd:string literal. Value format is issuer/collection/ulid (e.g. 'cm3/komai/01K...'), i.e. hub_id without the leading 'bih:' scheme prefix. Conceptually corresponds to bih:BIHIdentifier in the schema.org PropertyValue pattern."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:identifier .
+
+bih:hasDOI
+  a owl:DatatypeProperty ;
+  rdfs:label "has DOI"@en ;
+  rdfs:comment "Relates a hub entry to a DOI as an xsd:string literal (e.g. '10.3233/DS-210053'). Conceptually corresponds to bih:DOIIdentifier in the schema.org PropertyValue pattern."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:identifier .
+
+bih:hasISBN
+  a owl:DatatypeProperty ;
+  rdfs:label "has ISBN"@en ;
+  rdfs:comment "Relates a hub entry to an ISBN as an xsd:string literal. Conceptually corresponds to bih:ISBNIdentifier in the schema.org PropertyValue pattern."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:identifier .
+
+bih:hasCRID
+  a owl:DatatypeProperty ;
+  rdfs:label "has CRID"@en ;
+  rdfs:comment "Relates a hub entry to a CRID as an xsd:string literal. Conceptually corresponds to bih:CRIDIdentifier in the schema.org PropertyValue pattern."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:identifier .
+
+bih:hasOpenAlexId
+  a owl:DatatypeProperty ;
+  rdfs:label "has OpenAlex ID"@en ;
+  rdfs:comment "Relates a hub entry to an OpenAlex identifier as an xsd:string literal. Conceptually corresponds to bih:OpenAlexIdentifier in the schema.org PropertyValue pattern."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:identifier .
+
+bih:hasOCLC
+  a owl:DatatypeProperty ;
+  rdfs:label "has OCLC number"@en ;
+  rdfs:comment "Relates a hub entry to an OCLC control number as an xsd:string literal. Conceptually corresponds to bih:OCLCIdentifier in the schema.org PropertyValue pattern."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:identifier .
+
+bih:hasNDLBibID
+  a owl:DatatypeProperty ;
+  rdfs:label "has NDL bib ID"@en ;
+  rdfs:comment "Relates a hub entry to a National Diet Library bibliographic identifier as an xsd:string literal. Conceptually corresponds to bih:NDLBibIDIdentifier in the schema.org PropertyValue pattern."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:identifier .
+
+# --- Distribution properties (subPropertyOf schema:encoding) ---
+# schema:encoding: domain schema:CreativeWork, range schema:MediaObject.
+# bih:HubEntry has no declared subClassOf schema:CreativeWork, so these
+# properties are attached to hub entries as a BIH-internal convention;
+# when mapped to RDF resources, the subject would be bih:Resource
+# (subClassOf schema:CreativeWork) satisfying the domain.
+# The ranges bih:BibTeXDownload and bih:CSLJSONDownload are both
+# subClassOf bih:DownloadableData subClassOf schema:MediaObject,
+# satisfying the range of schema:encoding.
+
+bih:hasBibTeX
+  a owl:ObjectProperty ;
+  rdfs:label "has BibTeX distribution"@en ;
+  rdfs:comment "Relates a hub entry to a downloadable BibTeX representation of the described resource. Shortcut for schema:encoding with object type bih:BibTeXDownload."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range bih:BibTeXDownload ;
+  rdfs:subPropertyOf schema:encoding .
+
+bih:hasCSLJSON
+  a owl:ObjectProperty ;
+  rdfs:label "has CSL-JSON distribution"@en ;
+  rdfs:comment "Relates a hub entry to a downloadable CSL-JSON representation of the described resource. Shortcut for schema:encoding with object type bih:CSLJSONDownload."@en ;
+  rdfs:domain bih:HubEntry ;
+  rdfs:range bih:CSLJSONDownload ;
+  rdfs:subPropertyOf schema:encoding .
+
+# ============================================================
+# External vocabulary usage notes
+# (No domain/range re-assertions; see subclass declarations above.)
+# ============================================================
+
+# schema:identifier
+#   Official domain: schema:Thing
+#   Official range:  schema:PropertyValue | Text | URL
+#   BIH usage: subject is bih:Resource (subClassOf schema:CreativeWork
+#               subClassOf schema:Thing) ✓; object is bih:Identifier
+#               (subClassOf schema:PropertyValue) ✓.
+
+# schema:encoding
+#   Official domain: schema:CreativeWork
+#   Official range:  schema:MediaObject
+#   BIH usage: subject is bih:Resource (subClassOf schema:CreativeWork) ✓;
+#               object is bih:DownloadableData (subClassOf schema:MediaObject) ✓.
+#   For typed distribution shortcuts, prefer bih:hasBibTeX / bih:hasCSLJSON
+#   (both declared rdfs:subPropertyOf schema:encoding).
+
+# cito:cites
+#   Official domain/range: not formally constrained in CiTO (owl:Thing).
+#   BIH usage: both subject and object are bih:Resource
+#               (subClassOf schema:CreativeWork) ✓.
+
+# cito:isCitedBy
+#   Inverse of cito:cites (declared in CiTO itself; no re-assertion needed).
+#   BIH usage: same as cito:cites ✓.

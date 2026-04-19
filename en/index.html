@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bibliographic Information Hub</title>
+    <meta
+      name="description"
+      content="Bibliographic Information Hub (BIH) is a lightweight framework for publishing curated bibliographies as collections of stable items linked to identifiers, records, and related resources."
+    />
+    <link rel="stylesheet" href="../styles/site.css" />
+  </head>
+  <body class="landing-page lang-en">
+    <main class="page">
+      <nav class="lang-nav" aria-label="Language switcher">
+        <strong>English</strong>
+        <span>·</span>
+        <a href="../ja/">日本語</a>
+      </nav>
+
+      <header class="hero">
+        <h1 class="brand-mark">
+          <img class="brand-logo" src="../assets/logo.png" alt="BIH" />
+          <span class="expanded">Bibliographic Information Hub</span>
+        </h1>
+        <p class="tagline">A lightweight framework for publishing curated bibliographies</p>
+        <p class="lead">
+          Bibliographic Information Hub (BIH) is a framework for publishing and sharing bibliographic materials by
+          linking multiple identifiers, related resources, and related pages around stable items. It also allows you to
+          curate, structure, and publish bibliographic information yourself when no one else has done so.
+        </p>
+      </header>
+
+      <section class="section">
+        <h2>Core Concepts</h2>
+        <div class="grid">
+          <article class="card">
+            <h2>BIH issuer</h2>
+            <p>An issuer is an organization or individual that publishes and maintains BIH collections.</p>
+          </article>
+          <article class="card">
+            <h2>BIH collection</h2>
+            <p>
+              A collection is a published list of bibliographic materials organized around a theme, a holding, or
+              another coherent grouping.
+            </p>
+          </article>
+          <article class="card">
+            <h2>BIH item</h2>
+            <p>
+              An item is the unit that brings together multiple identifiers, related resources and pages, cached
+              bibliographic metadata, and explanatory notes.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Related Links</h2>
+        <ul>
+          <li>
+            <a href="https://github.com/bibliographic-information-hub/bih-app">bih-app</a>:
+            the framework repository on GitHub. Fork this if you want to become a BIH issuer.
+          </li>
+          <li>
+            <code>bih-site</code>:
+            the shared repository for the project landing page, ontology, JSON schema, and other top-level documents
+            <ul>
+              <li><a href="../ontology/bih-properties.ttl">Ontology (.ttl)</a></li>
+              <li><a href="../schema/bih-entry.schema.json">JSON Schema (.json)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>Bibliographic Information Hub (BIH)</p>
+      </footer>
+    </main>
+  </body>
+</html>

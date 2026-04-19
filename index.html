@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bibliographic Information Hub</title>
+    <meta
+      name="description"
+      content="Redirecting to the preferred language entry point for Bibliographic Information Hub (BIH)."
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="./styles/site.css" />
+  </head>
+  <body class="redirect-page">
+    <main class="redirect-card">
+      <h1>Bibliographic Information Hub</h1>
+      <p>Redirecting to your preferred language.</p>
+      <p class="meta">
+        You can explicitly choose a language with <code>?lang=en</code> or <code>?lang=ja</code>.
+      </p>
+      <div class="links">
+        <a class="pill" href="./?lang=en">English</a>
+        <a class="pill" href="./?lang=ja">日本語</a>
+      </div>
+    </main>
+    <script>
+      (() => {
+        const supported = ['en', 'ja'];
+        const url = new URL(window.location.href);
+        const explicit = url.searchParams.get('lang');
+
+        const normalize = (value) => {
+          if (!value) return null;
+          const lowered = value.toLowerCase();
+          if (lowered.startsWith('ja')) return 'ja';
+          if (lowered.startsWith('en')) return 'en';
+          return null;
+        };
+
+        const go = (lang) => {
+          const target = lang === 'ja' ? './ja/' : './en/';
+          window.location.replace(target);
+        };
+
+        const explicitLang = normalize(explicit);
+        if (explicitLang && supported.includes(explicitLang)) {
+          try {
+            localStorage.setItem('bih-site-lang', explicitLang);
+          } catch {}
+          go(explicitLang);
+          return;
+        }
+
+        let preferred = null;
+        try {
+          preferred = normalize(localStorage.getItem('bih-site-lang'));
+        } catch {}
+
+        if (!preferred) {
+          const browserLanguages = Array.isArray(navigator.languages) ? navigator.languages : [navigator.language];
+          preferred = browserLanguages.map(normalize).find(Boolean) ?? 'en';
+        }
+
+        go(preferred);
+      })();
+    </script>
+  </body>
+</html>

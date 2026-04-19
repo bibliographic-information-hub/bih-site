@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Bibliographic Information Hub</title>
+        <meta
+            name="description"
+            content="Bibliographic Information Hub（BIH）は、識別子・記述レコード・関連資料を結びつけながら、キュレーションされた文献リストを公開するための軽量な枠組みです。"
+        />
+        <link rel="stylesheet" href="../styles/site.css" />
+    </head>
+    <body class="landing-page lang-ja">
+        <main class="page">
+            <nav class="lang-nav" aria-label="Language switcher">
+                <a href="../en/">English</a>
+                <span>·</span>
+                <strong>日本語</strong>
+            </nav>
+
+            <header class="hero">
+                <h1 class="brand-mark">
+                    <img
+                        class="brand-logo"
+                        src="../assets/logo.png"
+                        alt="BIH"
+                    />
+                    <span class="expanded">Bibliographic Information Hub</span>
+                </h1>
+                <p class="tagline">
+                    文献リストを公開・共有するための軽量なフレームワーク
+                </p>
+                <p class="lead">
+                    Bibliographic Information
+                    Hub（BIH）は、文献資料に関わる複数の識別子、関連資料や関連ページを結びつけて公開し共有を促進するための仕組みです。誰も整備していない文献情報については、あなたが整備して公開することもできます。
+                </p>
+            </header>
+
+            <section class="section">
+                <h2>基本概念</h2>
+                <div class="grid">
+                    <article class="card">
+                        <h2 class="concept-title">
+                            <span class="concept-term">BIH issuer</span>
+                            <span class="concept-translation">発行者</span>
+                        </h2>
+                        <p>文献リストをを発行・管理する組織や個人です。</p>
+                    </article>
+                    <article class="card">
+                        <h2 class="concept-title">
+                            <span class="concept-term">BIH collection</span>
+                            <span class="concept-translation">文献リスト</span>
+                        </h2>
+                        <p>
+                            発行者によって公開される、テーマや所蔵などのまとまりを持った文献のリストです。
+                        </p>
+                    </article>
+                    <article class="card">
+                        <h2 class="concept-title">
+                            <span class="concept-term">BIH item</span>
+                            <span class="concept-translation">アイテム</span>
+                        </h2>
+                        <p>
+                            複数の識別子、関連資料や関連ページ、キャッシュされた書誌情報、解説を束ねる単位です。
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>関連リンク</h2>
+                <ul>
+                    <li>
+                        <a
+                            href="https://github.com/bibliographic-information-hub/bih-app"
+                            >bih-app</a
+                        >:
+                        フレームワークのGitHubリポジトリ。あなたが発行者になるにはこれをフォークしてください。
+                    </li>
+                    <li>
+                        <code>bih-site</code>:
+                        このプロジェクトの説明ページ、オントロジーやjsonスキーマなどの共通文書のGitHubリポジトリ
+                        <ul>
+                            <li>
+                                <a href="/ontology/bih-properties.ttl"
+                                    >オントロジー (.ttl)</a
+                                >
+                            </li>
+                            <li>
+                                <a href="/schema/bih-entry.schema.json"
+                                    >JSONスキーマ (.json)</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <footer>
+                <p>Bibliographic Information Hub (BIH)</p>
+            </footer>
+        </main>
+    </body>
+</html>

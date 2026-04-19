@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/bih/schema/bih-entry.schema.json",
+  "title": "BIH Entry",
+  "description": "Bibliographic Information Hub entry schema for the static editor/viewer prototype.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "hub_id",
+    "primary_id_property",
+    "primary_id_value",
+    "contextual_description",
+    "record_cache",
+    "links"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "hub_id": {
+      "type": "string",
+      "pattern": "^bih:[a-z0-9._/-]+$"
+    },
+    "primary_id_property": {
+      "type": "string",
+      "minLength": 1
+    },
+    "primary_id_value": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contextual_description": {
+      "type": ["string", "null"]
+    },
+    "record_cache": {
+      "type": "object",
+      "required": ["title", "creators", "issued_year", "container_title", "resource_type", "source_records"],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "creators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/creator"
+          }
+        },
+        "issued_year": {
+          "type": ["integer", "null"]
+        },
+        "issued_date": {
+          "type": ["string", "null"]
+        },
+        "container_title": {
+          "type": ["string", "null"]
+        },
+        "container_title_short": {
+          "type": ["string", "null"]
+        },
+        "collection_title": {
+          "type": ["string", "null"]
+        },
+        "publisher": {
+          "type": ["string", "null"]
+        },
+        "volume": {
+          "type": ["string", "null"]
+        },
+        "issue": {
+          "type": ["string", "null"]
+        },
+        "pages": {
+          "type": ["string", "null"]
+        },
+        "journal_abbreviation": {
+          "type": ["string", "null"]
+        },
+        "language": {
+          "type": ["string", "null"]
+        },
+        "abstract": {
+          "type": ["string", "null"]
+        },
+        "note": {
+          "type": ["string", "null"]
+        },
+        "keywords": {
+          "type": ["string", "null"]
+        },
+        "isbn": {
+          "type": ["string", "null"]
+        },
+        "issn": {
+          "type": ["string", "null"]
+        },
+        "pmid": {
+          "type": ["string", "null"]
+        },
+        "resource_type": {
+          "type": ["string", "null"]
+        },
+        "source_records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceRecord"
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/link"
+      }
+    }
+  },
+  "$defs": {
+    "creator": {
+      "type": "object",
+      "required": ["role", "family", "given", "literal"],
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "type": "string",
+          "default": "author"
+        },
+        "family": {
+          "type": ["string", "null"]
+        },
+        "given": {
+          "type": ["string", "null"]
+        },
+        "literal": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "sourceRecord": {
+      "type": "object",
+      "required": ["source", "retrieved_at", "record"],
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "record": {
+          "type": "object"
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "required": [
+        "link_id",
+        "property",
+        "target_type",
+        "target_value",
+        "normalized_target",
+        "source",
+        "url",
+        "access_note",
+        "last_checked_at",
+        "note"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "link_id": {
+          "type": "string"
+        },
+        "property": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": ["string", "null"]
+        },
+        "description": {
+          "type": ["string", "null"]
+        },
+        "target_type": {
+          "type": "string",
+          "enum": ["identifier", "record", "entry", "page", "collection", "distribution", "annotation", "citation", "other"]
+        },
+        "target_value": {
+          "type": "string"
+        },
+        "normalized_target": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "url": {
+          "type": ["string", "null"]
+        },
+        "access_note": {
+          "type": ["string", "null"]
+        },
+        "last_checked_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "note": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}
